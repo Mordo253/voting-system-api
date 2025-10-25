@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// MODELO: Voter (Votante)
+// ============================================
+model Voter {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  has_voted  Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relación: Un votante puede tener máximo un voto
+  vote Vote?
+
+  @@map("voters")
+}
+
+// ============================================
+// MODELO: Candidate (Candidato)
+// ============================================
+model Candidate {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  party      String?
+  votes      Int      @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relación: Un candidato puede tener muchos votos
+  votes_received Vote[]
+
+  @@map("candidates")
+}
+
+// ============================================
+// MODELO: Vote (Voto)
+// ============================================
+model Vote {
+  id           String   @id @default(uuid())
+  voter_id     String   @unique // UNIQUE garantiza un voto por votante
+  candidate_id String
+  voted_at     DateTime @default(now())
+
+  // Relaciones
+  voter     Voter     @relation(fields: [voter_id], references: [id], onDelete: Cascade)
+  candidate Candidate @relation(fields: [candidate_id], references: [id], onDelete: Cascade)
+
+  // Índice para optimizar búsquedas por candidato
+  @@index([candidate_id])
+  @@map("votes")
+}
