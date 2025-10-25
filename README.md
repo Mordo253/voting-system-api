@@ -491,7 +491,7 @@ Todos los demás endpoints son **públicos** para facilitar consultas y estadís
 
 ---
 
-## 🎯 Decisiones de Diseño
+##  Decisiones de Diseño
 
 ### **1. PostgreSQL sobre MongoDB**
 
