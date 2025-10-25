@@ -609,7 +609,7 @@ Todos los demás endpoints son **públicos** para facilitar consultas y estadís
 
 ### **Swagger UI - Documentación Interactiva**
 
-![Swagger Overview](.src/screenshots/1-swagger-overview.png)
+![Swagger Overview](./screenshots/1-swagger-overview.png)
 
 *Vista general de todos los endpoints disponibles en Swagger UI*
 
