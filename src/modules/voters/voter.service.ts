@@ -31,11 +31,11 @@ export class VoterService {
       throw ApiError.conflict(ERROR_MESSAGES.VOTER_EMAIL_EXISTS);
     }
 
-    // RN-V2: Verificar que el email no esté registrado como candidato
+    // RN-V2: Verificar que el nombre no esté registrado como candidato
     const candidateWithEmail = await prisma.candidate.findFirst({
       where: {
         name: {
-          equals: data.email,
+          equals: data.name,
           mode: 'insensitive',
         },
       },
